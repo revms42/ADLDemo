@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/adl4xml" xmlns:tns="http://www.ajar.org/adl4xml" elementFormDefault="qualified" xmlns:Q1="http://www.example.org/adl4xml">
+
+
+    <complexType name="OverviewResponseType">
+    	<sequence maxOccurs="1" minOccurs="1">
+    		<element name="dest" type="Q1:DestinationType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="serverAddress" type="anyURI" use="optional"></attribute>
+    </complexType>
+
+    <element name="Overview" type="Q1:OverviewResponseType"></element>
+
+    <complexType name="DestinationType">
+    	<attribute name="uri" type="anyURI" use="required"></attribute>
+    	<attribute name="method" type="Q1:methodType" use="optional" default="GET"></attribute>
+    	<attribute name="type" type="QName" use="required"></attribute>
+    </complexType>
+    
+    <simpleType name="methodType">
+    	<restriction base="string">
+    		<enumeration value="GET"></enumeration>
+    		<enumeration value="PUT"></enumeration>
+    		<enumeration value="POST"></enumeration>
+    		<enumeration value="DELETE"></enumeration>
+    		<enumeration value="PATCH"></enumeration>
+    	</restriction>
+    </simpleType>
+
+    <complexType name="DataDescriptionType">
+    	<sequence maxOccurs="1" minOccurs="1">
+    		<element name="pathParameter" type="Q1:PathParameterType"
+    			maxOccurs="unbounded" minOccurs="0">
+    		</element>
+    		<element name="attribute" type="QName" maxOccurs="unbounded" minOccurs="0"></element>
+    		<element name="member" type="QName" maxOccurs="unbounded" minOccurs="0"></element>
+    	</sequence>
+    	<attribute name="destination" type="anyURI" use="optional"></attribute>
+    	<attribute name="method" type="Q1:methodType" use="optional" default="GET"></attribute>
+    </complexType>
+
+    <complexType name="PathParameterType">
+    	<attribute name="name" type="string" use="required"></attribute>
+    	<attribute name="type" type="string" use="required"></attribute>
+    	<attribute name="method">
+    		<simpleType>
+    			<restriction base="Q1:pathMethodType">
+    				<enumeration value="query"></enumeration>
+    				<enumeration value="path"></enumeration>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+    <simpleType name="pathMethodType">
+    	<restriction base="string"></restriction>
+    </simpleType>
+</schema>
